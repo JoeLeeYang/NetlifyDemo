@@ -1,0 +1,78 @@
+<link href="/Scripts/差分檢測小工具.css" rel="stylesheet" />
+
+<script src="/Scripts/差分檢測小工具.js"></script>
+
+
+<div id="diffScore">
+  <div id="showAlert"></div>
+  <div id="viewTop">
+    <h2>差分檢測</h2>
+    <div id="Mode">
+      <div class="DifferenceMode">
+        <span>差分機制: </span>
+        <select name="DifferenceSel" id="DifferenceSel">
+          <option value="0">請選擇...</option>
+          <option value="1">各面向差分</option>
+          <option value="2">總分差分</option>
+        </select>
+      </div>
+      <div class="ScoreUnitMode">
+        <span>評分制: </span>
+        <select name="ScoreUnitSel" id="ScoreUnitSel">
+          <option value="0">請選擇...</option>
+          <option value="1">百分制</option>
+          <option value="2">配分制</option>
+        </select>
+      </div>
+    </div>
+    <div id="ScoreDifferenceDiv">
+      <span>高低差: </span><input type="number" name="HeightDifference" class="ScoreDifference" max="99" min="1" step="1" data-score="">
+      <span>標準差: </span><input type="number" name="StandardDeviation" class="ScoreDifference" max="49" min="1" step="1" data-score="">
+      <span>離均差: </span><input type="number" name="Avg" class="ScoreDifference" max="99" min="1" step="1" data-score="">
+    </div>
+  </div>
+
+  <div id='WeightArea'>
+    <h3>請輸入該面向的配分比重</h3>
+    <input type='number' max='100' min='1' id="keyWeight"></input>
+  </div>
+  
+  <div id='ScoreArea'>
+    <h3>請輸入分數</h3>
+    <textarea rows='2' id="keyScoreDiv" placeholder="請輸入分數(以空格隔開)(精準度至小數點後10位)"></textarea>
+    <button class="btn calculateScoreBtn">計算</button>
+  </div> 
+  <h4 class="ChangeToScoreUnit1">分數轉換(配分轉百分)</h4>
+  <div id="ChangeToScoreUnit1" class="ChangeToScoreUnit1"></div>
+  
+  <div id='ResultArea'>
+    <h3>差分計算結果:</h3>
+    <table id="showResult" border='1' style="border:1px #FFD382 solid ">
+      <thead>
+        <th width:30%>差分類型</th>
+        <th width:20%>值</th>
+        <th width:50%>差分結果</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="HeightDifferenceTd">高低差</td>
+          <td class="value1"></td>
+          <td class="result1"></td>
+        </tr>
+        <tr>
+          <td class="StandardDeviationTd">標準差</td>
+          <td class="value2"></td>
+          <td class="result2"></td>
+        </tr>
+        <tr>
+          <td class="AvgTd">平均值</td>
+          <td class="value3"></td>
+          <td class="result3"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+</div>
+  
