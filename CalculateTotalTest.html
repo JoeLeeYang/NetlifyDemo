@@ -1,0 +1,30 @@
+<script src="./CalculateTotalTest.js"></script>
+<link href="./DifferenceAndTotalTest.css" rel="stylesheet" />  
+
+<div id="TotalTest">
+  <h2>書審頁面-總分檢測</h2>
+  <div class="Total_ScoreUnitMode">
+    <span>評分制: </span>
+    <select name="ScoreUnitSel" id="ScoreUnit" class="select">
+      <option value="0">請選擇...</option>
+      <option value="1">百分制</option>
+      <option value="2">配分制</option>
+    </select>
+  </div>
+
+  <div id="EachWeightArea" class="area">
+      <h3>請輸入各面向配分比重</h3>
+      <textarea name="EachWeight" id="EachWeight" class="keyArea" cols="30" rows="2"></textarea>
+  </div>
+
+  <div id="EachScoreArea" class="area">
+    <h3>請輸入各面向分數</h3>
+    <textarea name="EachScore" id="EachScore" class="keyArea"  cols="30" rows="5"></textarea>
+    <button class="btn calculateScoreBtn">計算</button>
+  </div>
+
+  <div id="TotalResultArea" class="area">
+    <h3>總分 - 計算結果</h3>
+    <div id="TotalResult"></div>
+  </div>
+</div>

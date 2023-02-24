@@ -8,7 +8,7 @@
   let StandardDeviationSetVal = '';
   let AvgSetVal = '';
   let ScoreWeightArray = [];
-  
+
   //差分機制
   $('.DifferenceMode').change(function(){
     DifferenceMode = $('.DifferenceMode option:selected').val();
