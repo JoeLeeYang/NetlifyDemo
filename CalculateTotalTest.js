@@ -11,8 +11,12 @@
     console.log(typeof(ScoreUnit));
 
     if(ScoreUnit === '0') return;
+
+    $('#EachWeightArea').show(); 
+
+    if(ScoreUnit === '2')  $('#EachWeightArea').hide(); 
     
-    $('#EachScoreArea,#EachWeightArea').show(); 
+    $('#EachScoreArea').show(); 
   })
 
   $('.calculateScoreBtn').on('click',function(){
@@ -21,7 +25,7 @@
     WeightArray = [];
     ScoreArray = [];
     ScoreWeight = [];
-    
+
     $('#TotalResultArea').show();
 
     ScoreArray = $('#EachScore').val().split(' ').filter(val =>{
