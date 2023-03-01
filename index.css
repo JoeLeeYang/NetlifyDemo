@@ -36,6 +36,29 @@ html, body {
   padding: 6px 10px;
   width: 100%;
 }
+
+.TestPageMode > span{
+  color:#555;
+  font-size: 18px;
+  font-weight: bolder;
+  margin-right: 8px;
+}
+
+#TestPageSel{
+  color: blueviolet;
+  font-size: 14px;
+}
+#TestPageSel option:first-child{
+  color: #000;
+}
+#TestPageSel option:checked{
+  color: red;
+  font-weight: bolder
+}
+#TestPageSel option:not(:checked){
+  color: #333;
+}
+
 .showPage{
   display: none;
 }

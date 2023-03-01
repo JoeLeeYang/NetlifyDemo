@@ -16,6 +16,15 @@ html, body {
   background-color: #F3F3F3;
 }
 
+.TestPageMode{
+  height: 100%;
+  width: 97%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin: 50px 15px;
+  text-align: center;
+}
 
 #diffScore,#TotalTest{
   width: 70%;
@@ -80,16 +89,6 @@ h2 {
   justify-content: center;
   align-items: center;
   height: 60px;
-}
-
-.TestPageMode{
-  height: 100%;
-  width: 97%;
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  margin: 50px 15px;
-  text-align: center;
 }
 
 .select{
