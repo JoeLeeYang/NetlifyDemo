@@ -53,6 +53,7 @@
         // console.log(item);
         total += parseFloat(item.Score)*parseFloat(item.Weight)/100;
       });    
+      total = parseFloat(Math.round(total*100)/100);
     }
     else if(ScoreUnit === '2'){
       ScoreArray.forEach(function(item){
