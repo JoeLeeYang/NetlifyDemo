@@ -26,7 +26,7 @@
     let value = parseInt($(this).val());
     let type = $(this).attr('name');
     let oldScore = $(this).data('score');
-    console.log('oldScore=>',oldScore)
+    // console.log('oldScore=>',oldScore)
     
     $(this).val(value); 
     
@@ -72,9 +72,9 @@
     if($('input[name=Avg]').val() !== '')
       AvgSetVal = $('input[name=Avg]').val();
     
-    console.log('高低差設定值:',HeightDifferenceSetVal)
-    console.log('標準差設定值:',StandardDeviationSetVal)
-    console.log('離均差設定值:',AvgSetVal)
+    // console.log('高低差設定值:',HeightDifferenceSetVal)
+    // console.log('標準差設定值:',StandardDeviationSetVal)
+    // console.log('離均差設定值:',AvgSetVal)
   
     keyScoreArray = $('#keyScoreDiv').val().split(' ').filter(val => {
       return val !== '';
@@ -85,7 +85,7 @@
       
       Weight = $('#keyWeight').val();
       
-      console.log('Weight=>',Weight)
+      // console.log('Weight=>',Weight)
       
       keyScoreArray.forEach(function(val,index){
         keyScoreArray_Unit2.push(val);
@@ -99,9 +99,9 @@
           OriginScore: parseInt(keyScoreArray_Unit2[i])
         });
       }
-      console.log('ScoreWeightArray=>',ScoreWeightArray)
+      // console.log('ScoreWeightArray=>',ScoreWeightArray)
     }
-    console.log('keyScoreArray=>',keyScoreArray);
+    // console.log('keyScoreArray=>',keyScoreArray);
     
     let HeightDifference = 0; //高低差
     let StandardDeviation = 0;//標準差
@@ -127,10 +127,10 @@
     StandardDeviation = parseFloat(Math.sqrt(StandardDeviation/keyScoreArray.length).toFixed(10));
     
     
-    console.log('HeightDifference=>',HeightDifference);
-    console.log('StandardDeviation=>',StandardDeviation)
-    console.log('Total=>',Total);
-    console.log('ScoreAvg=>',ScoreAvg)
+    // console.log('HeightDifference=>',HeightDifference);
+    // console.log('StandardDeviation=>',StandardDeviation)
+    // console.log('Total=>',Total);
+    // console.log('ScoreAvg=>',ScoreAvg)
     
     SetUpScoreResult(HeightDifference,ScoreAvg,StandardDeviation,keyScoreArray);  
   });

@@ -7,8 +7,11 @@
 
   $('#ScoreUnit').change(function(){
     ScoreUnit = $('#ScoreUnit option:selected').val();
-    console.log('ScoreUnit=>',ScoreUnit)
-    console.log(typeof(ScoreUnit));
+    // console.log('ScoreUnit=>',ScoreUnit)
+    // console.log(typeof(ScoreUnit));
+
+    $('#EachWeight,#EachScore').val('');
+
 
     if(ScoreUnit === '0') return;
 
@@ -31,23 +34,23 @@
     ScoreArray = $('#EachScore').val().split(' ').filter(val =>{
       return val !== '';
     })
-    console.log('ScoreArray=>',ScoreArray)
+    // console.log('ScoreArray=>',ScoreArray)
 
     WeightArray = $('#EachWeight').val().split(' ').filter(val =>{
       return val !== '';
     })
 
     ScoreWeightArray = ScoreArray.map(function(val,index){
-      return {Weight:val, Score:ScoreArray[index]};
+      return {Weight:WeightArray[index], Score:val};
     })
     
-    console.log('ScoreWeightArray=>',ScoreWeightArray);
+    // console.log('ScoreWeightArray=>',ScoreWeightArray);
 
      //總分計算
     if(ScoreUnit === '1'){
 
       ScoreWeightArray.forEach(function(item){
-        console.log(item);
+        // console.log(item);
         total += parseFloat(item.Score)*parseFloat(item.Weight)/100;
       });    
     }
@@ -57,7 +60,7 @@
       });
     }
 
-    console.log('total:',total);
+    // console.log('total:',total);
 
     $('#TotalResult').text(total); 
   })
