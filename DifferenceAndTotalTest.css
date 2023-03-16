@@ -101,7 +101,8 @@ h2 {
   margin-left: 10px;
 }
 
-#ScoreDifferenceDiv .ScoreDifference {
+#ScoreDifferenceDiv .ScoreDifference,
+#ABValueDiv .ABValues{
   width: 60px;
   margin-right: 20px;
   padding: 5px;
