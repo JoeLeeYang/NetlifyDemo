@@ -9,7 +9,8 @@
     $('#selectTestPage').hide();
     $('#showPage').show();
 
-    if(TestPageMode === '1') EJSTemplate(null,'DifferenceTest.html','#showPage')
-    if(TestPageMode === '2') EJSTemplate(null,'CalculateTotalTest.html','#showPage')
+    if(TestPageMode === '1') EJSTemplate('DifferenceTest.html','#showPage');
+    if(TestPageMode === '2') EJSTemplate('AdjustedScoreTest.html','#showPage');
+    if(TestPageMode === '3') EJSTemplate('CalculateTotalTest.html','#showPage');
   })
 })

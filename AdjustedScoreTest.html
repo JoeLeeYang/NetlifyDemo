@@ -1,0 +1,40 @@
+<script src="./AdjustedScoreTest.js"></script>
+<link href="./DifferenceAndTotalTest.css" rel="stylesheet" />  
+
+<div id="diffScore">
+  <div id="showAlert"></div>
+  <div id="viewTop">
+    <h2>調整分數檢測</h2>
+  </div>  
+
+  <div id="ABValueDiv">
+    <span>調整分數A值: </span><input type="number" name="AValue" class="ABValues" step="any" min="0" max="3">
+    <span>調整分數B值: </span><input type="number" name="BValue" class="ABValues" step="any" min="0" max="50">
+  </div>
+
+
+  <div id='ScoreArea'>
+    <h3>請輸入綜合得分</h3>
+    <textarea rows='2' id="keyScoreDiv" class="keyArea"  placeholder="請輸入分數(以空格隔開)(精準度至小數點後10位)"></textarea>
+    <button class="btn calculateScoreBtn">計算</button>
+  </div> 
+
+  
+  <div id='ResultArea' class="area">
+    <h3>差分計算結果:</h3>
+    <table id="showResult" border='1' style="border:1px #FFD382 solid ">
+      <thead>
+        <th width=12%'> 綜合得分 </th>
+        <th width='44%'> T分數(Z分數-10+50) </th>
+        <th width='44%'> 調整分數(T分數*A+B) </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="AvgTotalScoreTd">綜合得分</td>
+          <td class="TScoreTd"></td>
+          <td class="AdjustedScoreTd"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

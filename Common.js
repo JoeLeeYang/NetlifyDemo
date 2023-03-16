@@ -1,4 +1,4 @@
-﻿function EJSTemplate(Data,Template,Target,Mode='html',Url=null){
+﻿function EJSTemplate(Template,Target,Mode='html',Url=null){
 
     $.ajax({
 
@@ -9,7 +9,7 @@
         async: false,
 
         success: function(Content){
-            if(Data === null) Data = {};
+            let Data = {};
 
             let HtmlContent = ejs.render(Content,Data);
 
