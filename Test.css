@@ -185,8 +185,12 @@ h3, h4 {
   border:1px #FFD382 solid
 }
 
-#showResult th {
+#showResult th{
   padding: 5px;
+  border:1px #FFD382 solid;
+}
+#showResult td{
+  border:1px #FFD382 solid;
 }
 
 /* 總分計算div */
