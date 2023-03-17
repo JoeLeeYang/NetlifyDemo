@@ -9,6 +9,13 @@
   let AvgSetVal = '';
   let ScoreWeightArray = [];
 
+  //回首頁
+  $('.goHome').off('click').on('click',function(){
+    $('#selectTestPage').show();
+    $('#showPage').hide();
+    EJSTemplate('index.html','#showPage');
+  });
+
   //差分機制
   $('.DifferenceMode').change(function(){
     DifferenceMode = $('.DifferenceMode option:selected').val();
@@ -27,8 +34,6 @@
     let type = $(this).attr('name');
     let oldScore = $(this).data('score');
     // console.log('oldScore=>',oldScore)
-    
-    $(this).val(value); 
     
     $('#showAlert').text('').html('').hide();
     
@@ -54,13 +59,8 @@
   //計算btn => 計算高低差 標準差 與 平均值
   $('.calculateScoreBtn').on('click',function(){
     //清空原設定值 與 陣列
-    HeightDifferenceSetVal = '';
-    StandardDeviationSetVal = '';
-    AvgSetVal = '';
-    Weight = '';
-    keyScoreArray = [];
-    keyScoreArray_Unit2 = [];
-    ScoreWeightArray = [];
+    HeightDifferenceSetVal,StandardDeviationSetVal,AvgSetVal,Weight = '';
+    keyScoreArray,keyScoreArray_Unit2,ScoreWeightArray = [];
     
     //取差分設定值
     if($('input[name=HeightDifference]').val() !== '')

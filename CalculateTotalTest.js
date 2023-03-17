@@ -5,13 +5,19 @@
   let ScoreWeightArray = [];
   let total = 0;
 
+  //回首頁
+  $('.goHome').off('click').on('click',function(){
+    $('#selectTestPage').show();
+    $('#showPage').hide();
+    EJSTemplate('index.html','#showPage');
+  });
+
   $('#ScoreUnit').change(function(){
     ScoreUnit = $('#ScoreUnit option:selected').val();
     // console.log('ScoreUnit=>',ScoreUnit)
     // console.log(typeof(ScoreUnit));
 
     $('#EachWeight,#EachScore').val('');
-
 
     if(ScoreUnit === '0') return;
 
