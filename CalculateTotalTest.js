@@ -9,7 +9,6 @@
   $('.goHome').off('click').on('click',function(){
     $('#selectTestPage').show();
     $('#showPage').hide();
-    EJSTemplate('index.html','#showPage');
   });
 
   $('#ScoreUnit').change(function(){

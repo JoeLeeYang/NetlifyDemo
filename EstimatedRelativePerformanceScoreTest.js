@@ -10,7 +10,6 @@
  $('.goHome').off('click').on('click',function(){
   $('#selectTestPage').show();
   $('#showPage').hide();
-  EJSTemplate('index.html','#showPage');
 });
   
   //調整分數AB值

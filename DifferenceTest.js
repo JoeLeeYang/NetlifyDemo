@@ -13,7 +13,6 @@
   $('.goHome').off('click').on('click',function(){
     $('#selectTestPage').show();
     $('#showPage').hide();
-    EJSTemplate('index.html','#showPage');
   });
 
   //差分機制
