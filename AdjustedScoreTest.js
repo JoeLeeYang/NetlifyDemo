@@ -59,13 +59,13 @@
     keyScoreArray.forEach(function(val){
       Total += parseFloat(val);
     });
-    ScoreAvg = parseFloat((Math.round(Total/keyScoreArray.length*10000000000)/10000000000).toFixed(10));
+    ScoreAvg = parseFloat((Math.round(Total/keyScoreArray.length*100)/100).toFixed(2));
     
     //標準差
     keyScoreArray.forEach(val => {
       StandardDeviation += Math.pow((Math.abs(parseFloat(val)-ScoreAvg)),2);
     });
-    StandardDeviation = parseFloat(Math.sqrt(StandardDeviation/keyScoreArray.length).toFixed(10));
+    StandardDeviation = parseFloat(Math.sqrt(StandardDeviation/keyScoreArray.length));
 
     //Z分數
     ZScoreArray = keyScoreArray.map(val => {
@@ -74,22 +74,25 @@
 
     //T分數
     TScoreArray = ZScoreArray.map(val => {
-      return parseFloat((Math.round((val*10+50)*100)/100).toFixed(2));
+      return parseFloat((Math.round((val*10+50)*10)/10)).toFixed(2);
     });
 
     //調整分數
     AdjustedScoreArray = TScoreArray.map(val =>{
-      return parseFloat((Math.round((val*AValue + BValue)*100)/100).toFixed(2));
+      return parseFloat((Math.round((parseFloat(val)*AValue + BValue)*100)/100)).toFixed(2);
     });
 
-    // console.log('AVlaue:',AValue);
-    // console.log('BValue:',BValue);
-
-    // console.log('ZScoreArr:',ZScoreArray);
-    // console.log(('TScoreArr:',TScoreArray));
-    // console.log('AdjustedScoreArr:',AdjustedScoreArray);
+    console.log('AVlaue:',AValue);
+    console.log('BValue:',BValue);
+    console.log('ScoreAvg:',ScoreAvg);
+    console.log('StandardDeviation:',StandardDeviation);
+    console.log('keyScoreArray:',keyScoreArray);
+    console.log('ZScoreArr:',ZScoreArray);
+    console.log('TScoreArr:',TScoreArray);
+    console.log('AdjustedScoreArr:',AdjustedScoreArray);
     
     SetUpScoreResult();  
+    $('#AdjustedScoreDes').show();
   });
   
   //table塞值
@@ -101,18 +104,29 @@
     
     //set差分結果
     //綜合得分
-    keyScoreArray.forEach(val => {
-      $('.AvgTotalScoreTd').append(`<span style='background-color: yellow'>${val} &emsp;</span><br>`)
+    keyScoreArray.forEach((val,index) => {
+      if(index%2 === 0)
+        $('.AvgTotalScoreTd').append(`<span style='background-color: rgba(10,255,10,0.8)'>${val}</span><br>`);
+      else if(index%2 === 1)
+        $('.AvgTotalScoreTd').append(`<span style='background-color: rgba(10,30,200,0.5'>${val}</span><br>`);
+
     });
 
     //T分數
-    TScoreArray.forEach(val => {
-    $('.TScoreTd').append(`<span style='background-color: yellow'>${val} &emsp;</span><br>`);
+    TScoreArray.forEach((val,index) => {
+      if(index%2 === 0)
+        $('.TScoreTd').append(`<span style='background-color: rgba(10,255,10,0.8)'>${val}</span><br>`);
+      else if(index%2 === 1)
+        $('.TScoreTd').append(`<span style='background-color: rgba(0,0,200,0.5)'>${val}</span><br>`);
+        
     });
     
     //調整分數
-    AdjustedScoreArray.forEach(val =>{
-      $('.AdjustedScoreTd').append(`<span style='background-color: yellow'>${val} &emsp;</span><br>`);
+    AdjustedScoreArray.forEach((val,index) =>{
+      if(index%2 === 0)
+        $('.AdjustedScoreTd').append(`<span style='background-color: rgba(10,255,10,.8)'>${val}</span><br>`);
+      if(index%2 === 1)
+        $('.AdjustedScoreTd').append(`<span style='background-color: rgba(0,0,200,0.5)'>${val}</span><br>`);
     });
     
   }

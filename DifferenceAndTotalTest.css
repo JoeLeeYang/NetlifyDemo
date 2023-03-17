@@ -180,3 +180,28 @@ h3, h4 {
   width: 300px;
   height: 60px;
 }
+
+hr{
+  margin-top: 2rem;
+  border: 3px #555 solid;
+}
+
+#AdjustedScoreDes{
+  display: none;
+}
+
+#AdjustedScoreDes li{
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+#AdjustedScoreDes li:nth-child(5){
+  margin-top: 12px
+}
+
+#AdjustedScoreDes li:first-child,
+#AdjustedScoreDes li:nth-child(2),
+#AdjustedScoreDes li:nth-child(3),
+#AdjustedScoreDes li:nth-child(4){
+  color: rgba(0,0,220,1)
+}
