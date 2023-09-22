@@ -76,10 +76,10 @@
         this[page] = !this[page];
       },
       turnToIndexPage(){ //返回首頁
-        // this[this.showPage] = false;
-        // this.isIndexPage = true;
-		// this.showPage = '';
-		window.location.reload();
+        this[this.showPage] = false;
+        this.isIndexPage = true;
+		this.showPage = '';
+		// window.location.reload();
       },
       showArea(){ //差分頁面 show Area
         let objName = '';
