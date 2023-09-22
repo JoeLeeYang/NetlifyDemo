@@ -4,8 +4,11 @@
   position: relative;
   /* border: 1px solid #000; */
 }
+*{
+  position: relative;
+}
 
-html, body {
+html, body ,#app {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -13,8 +16,9 @@ html, body {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  background-color: #F3F3F3;
+  background-color: #faf2f2;
 }
+
 
 #indexDiv{
   width:100%;
@@ -88,4 +92,234 @@ h2 {
   display: none;
   width: 100%;
   height: 100%;
+}
+
+.TestPageMode{
+  height: 100%;
+  width: 97%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin: 50px 15px;
+  text-align: center;
+}
+
+.diffScore,#TotalTest{
+  width: 70%;
+  height: 100%;
+  background-color: #fff;
+  padding: 0 10px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#showAlert{
+  display: none;
+  width: 300px;
+  height: 100px;
+  border: solid 6px #999;
+  border-radius: 5%;
+  box-shadow: 10px 9px 15px rgba(0, 0, 0, 0.6);
+  position: absolute;
+  left: 12%;
+  top: 15%;
+  z-index: 2;
+  opacity: 0.8;
+  background-color: #FFC954;
+  transform: translateX(50%) translateY(50%);
+  text-align: center;
+  padding: 10px;
+  font-size: 30px;
+}
+
+#viewTop {
+  /* display: inline-flex; */
+  background-color: #B9B9FF;
+  margin: 0 0 7px;
+  border: solid 3px #444;
+  width:100%;
+  min-height:8vh;
+  text-align: center
+}
+
+.title {
+  display: inline-block;
+  text-align: center;
+  border-bottom: solid 2px #555;
+  color: #444;
+  margin: 0 15px;
+  padding: 5px;
+  width: 70%;
+  /* height: 18vh; */
+}
+
+.goHome{
+  position: absolute;
+  right: 1vw;
+  top: 1vh;
+}
+
+.Mode{
+  padding: 0px 10px 10px;
+  width: 97%;
+  height: auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+
+.content,.Total_ScoreUnitMode {
+  padding: 6px 10px;
+  width: 100%;
+}
+
+.Total_ScoreUnitMode{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.select{
+  margin-left: 10px;
+  padding: 3px 8px;
+}
+
+#ScoreDifferenceDiv {
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.inputVal{
+  width: 60px;
+  margin-right: 20px;
+  padding: 5px;
+}
+
+
+.keyArea, #ChangeToScoreUnit1 {
+  width: 75%;
+  padding: 10px;
+  border: 2px solid #555;
+}
+
+#keyWeight {
+  width: 60px;
+  height: 25px;
+  padding: 5px;
+  border: 2px solid #555;
+  font-size: 22px;
+  color: #FF3D4A;
+}
+
+h3, h4 {
+  margin: 20px 0 5px;
+}
+
+#ChangeToScoreUnit1 {
+  height: 100px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.button {
+  position: absolute;
+  padding: 3px 10px;
+  border-radius: 10%;
+  width: 60px;
+  height: 30px;
+  background-color: #FF3D4A;
+  color: #F3F3F3;
+  font-size: 15px;
+  font-weight: 900;
+}
+.button:hover {
+  background-color: #FFC954;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.calculateScoreBtn {
+  left: 82%;
+}
+
+.alertBtn {
+  bottom: 5px;
+  left: 120px;
+}
+
+#showResult {
+  width: 100%;
+  height: 200px;
+  margin-top: 5px;
+  border: solid 1px #000;
+  text-align: left;
+  border:1px #FFD382 solid
+}
+
+#showResult th{
+  padding: 5px;
+  border:1px #FFD382 solid;
+}
+#showResult td{
+  border:1px #FFD382 solid;
+}
+
+/* 總分計算div */
+#TotalResult{
+  width: 300px;
+  height: 60px;
+}
+
+hr{
+  margin-top: 2rem;
+  border: 3px #555 solid;
+}
+
+/* 調整分數 */
+
+#AdjustedScoreDes{
+  display: none;
+}
+
+#AdjustedScoreDes li{
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+#AdjustedScoreDes li:nth-child(5){
+  margin-top: 12px
+}
+
+#AdjustedScoreDes li:first-child,
+#AdjustedScoreDes li:nth-child(2),
+#AdjustedScoreDes li:nth-child(3),
+#AdjustedScoreDes li:nth-child(4){
+  color: rgba(0,0,220,1)
+}
+
+/* 推估相對表現 */
+.RelativePerformanceTable{
+  height: 100px;
+  text-align:center;
+}
+
+#MaxMin span:nth-child(2),
+#MaxMin span:nth-child(4){
+  color:rgba(0,10,200,0.9)
+}
+
+#MaxMin span:nth-child(2){
+  margin-right: 15vw;
+}
+
+.formula{
+  width: 100%;
+}
+.formula img{
+  width: 50vw;
+  height: 20vh
+  /* background-image: url("PR計算.jpg");
+  background-size: cover;
+  background-position: left top; */
 }
