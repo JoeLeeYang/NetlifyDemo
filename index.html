@@ -1,34 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DifferenceTest</title>
-
-    <script src="./jquery-3.6.0.min.js"></script>
-    <script src="./ejs.min.js"></script>
-    <script src="./Common.js"></script>
-    <script src="./index.js"></script>
-    <link href="./index.css" rel="stylesheet" />   
-   
-    <div id="indexDiv">
-      <div id="selectTestPage">
-        <h2>檢測頁面</h2>
-        <div class="TestPageMode">
-          <span id="selectIndexPage">選擇測試畫面:</span>
-          <select name="TestPageSel" id="TestPageSel" class="select">
-            <option value="0">請選擇</option>
-            <option value="1">差分檢測</option>
-            <option value="2">調整分數檢測</option>
-            <option value="3">書審頁面-總分檢測</option>
-            <option value="4">推估相對表現檢測</option>
-          </select>
-        </div>        
-      </div>
-      <div id="showPage"></div>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DifferenceTest</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="./jquery-3.6.0.min.js"></script> 
+  <script src="./index.js"></script>
+  <script src="./mitt.js"></script>
+  <link href="./index.css" rel="stylesheet" />  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  
+  <div id="app">
+    <!-- index畫面 -->
+    <div id="selectTestPage" v-if="isIndexPage">
+      <h2>檢測頁面</h2>
+      <div class="TestPageMode">
+        <div>測試畫面:</div>
+        <select name="TestPageSel" id="TestPageSel" class="form-select" v-model="showPage" @click="changePage(showPage)">
+          <option value="" disabled>請選擇</option>
+          <option :value="item.engName" v-for="(item,key) in indexList" :key="'Page'+key"> {{item.name}} </option>
+        </select>
+      </div>        
     </div>
-  </body>
+
+    <!-- 差分檢測畫面 -->
+    <div class="diffScore" v-if="isDifferencePage">
+      <div id="showAlert"></div>
+      <div id="viewTop">
+        <span class="title">差分檢測</span>
+        <button class="btn btn-outline-secondary btn-sm goHome" @click="turnToIndexPage">回首頁</button>
+
+        <div class="Mode">
+          <div class="DifferenceMode content">
+            <span>差分機制: </span>
+            <select name="DifferenceSel" id="DifferenceSel" class="select" v-model="differenceObj.differenceMode" @change="changeDiffType(differenceObj.differenceMode)">
+              <option value="" disabled>請選擇...</option>
+              <option :value="1">各面向差分</option>
+              <option :value="2">總分差分</option>
+			  <option :value="3">專題實作差分</option>
+            </select>
+          </div>
+
+          <select-score-unit></select-score-unit>
+        </div>
+
+        <div id="ScoreDifferenceDiv" class="content">
+          <label for="HeightDifference">
+            高低差: <input id="HeightDifference" v-model.number.lazy="differenceObj.heightDifferenceSet" type="number" class="inputVal" max="99" min="1" step="1">
+          </label>
+          <label for="StandardDeviation">
+            標準差:<input id="StandardDeviation" v-model.number.lazy="differenceObj.standardDeviationSet" type="number" class="inputVal" max="49" min="1" step="1"> 
+          </label>
+          <label for="Avg">
+            離均差: <input type="number" v-model.number.lazy="differenceObj.avgSet" id="Avg" class="inputVal" max="99" min="1" step="1">
+          </label>
+        </div>
+      </div>
+
+      <weight-score :page="showPage" :diff-obj="differenceObj"></weight-score>
+      
+      <div id='ResultArea' v-if="differenceObj.showCalResult">
+        <h3>差分計算結果:</h3>
+        <table id="showResult" border='1'>
+          <thead>
+            <th width='25%'> 差分類型 </th>
+            <th width='24%'> 值 </th>
+            <th width='51%'> 差分結果 </th>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="HeightDifferenceTd">高低差</td>
+              <td>
+                {{heightDifferenceVal}}
+              </td>
+              <td>
+                {{heightDifferenceShowOnTable}}
+              </td>
+            </tr>
+            <tr>
+              <td class="StandardDeviationTd">標準差</td>
+              <td>
+                {{standardDeviationVal}}
+              </td>
+              <td>
+                {{standardDeviationShowOnTable}}
+              </td>
+            </tr>
+            <tr>
+              <td class="AvgTd">離均差 {{avgRange}}</td>
+              <td>
+                平均值: {{avgVal}}
+              </td>
+              <td>
+                {{avgShowOnTable}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- 調整分數檢測畫面 -->
+    <div class="diffScore" v-if="isAdjustedScorePage">
+      <div id="showAlert"></div>
+      <div id="viewTop">
+        <span class="title">調整分數檢測</span>
+        <button class="btn btn-outline-secondary btn-sm goHome" @click="turnToIndexPage">回首頁</button>
+      </div>  
+    
+      <div class="content">
+        <span>調整分數A值: </span><input v-model.number.lazy="adjustedScoreObj.scoreA" type="number" name="AValue" class="inputVal" data-score="0" step="any" min="0" max="3">
+        <span>調整分數B值: </span><input v-model.number.lazy="adjustedScoreObj.scoreB" type="number" name="BValue" class="inputVal" data-score="0" step="any" min="0" max="50">
+      </div>
+    
+      <div id='ScoreArea'>
+        <h3>請依照學生組別輸入綜合得分(僅限輸入一組)</h3>
+        <textarea v-model.lazy="adjustedScoreObj.scoreStr" @change="saveToArr" rows='2' id="keyScoreDiv" class="keyArea"  placeholder="請輸入分數(以空格隔開)"></textarea>
+        <button class="button calculateScoreBtn" @click="calculateAdjustedScore">計算</button>
+      </div> 
+      
+      <div id='ResultArea' class="area" v-if="adjustedScoreObj.isShowResultArea">
+        <h3>差分計算結果:</h3>
+        <table id="showResult" border='1'>
+          <thead>
+            <th width=12%'> 綜合得分 </th>
+            <th width='44%'> T分數(Z分數*10+50) </th>
+            <th width='44%'> 調整分數(T分數*A+B) </th>
+          </thead>
+          <tbody>
+            <tr v-for="(item,key) in adjustedScoreObj.scoreArr" :key="'tScore'+key">
+              <td>{{item}}</td>
+              <td>
+                {{adjustedScoreObj.tScoreArr[key]}}<br>
+              </td>
+              <td>
+                {{adjustedScoreObj.adjustedScoreArr[key]}}<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <div id="AdjustedScoreDes">
+        <ol>
+          <li>Z分數公式: Z = (分數 - 組別平均分數)/組別分數標準差</li>
+          <li>Z分數: 取到小數點後第二位</li>
+          <li>組別平均分數: 取到小數點後第二位</li>
+          <li>組別分數標準差: 取全部位數</li>
+          <li>T分數: 取到小數點後第二位</li>
+          <li>調整分數分數: 取到小數點後第二位</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 書審頁面-總分檢測 -->
+    <div id="TotalTest" v-if="isCalculateTotalPage">
+      <div id="viewTop">
+        <span class="title">書審頁面-總分檢測</span>
+        <button class="btn btn-outline-secondary btn-sm goHome" @click="turnToIndexPage">回首頁</button>
+        
+        <select-score-unit></select-score-unit>
+      </div>  
+
+      <weight-score :page="showPage"></weight-score>
+      <total-area></total-area>
+    </div>
+
+    <!-- 推估相對表現畫面 -->
+    <div class="diffScore" v-if="isRelativePerformancePage">
+      <div id="showAlert"></div>
+      <div id="viewTop">
+        <span class="title">推估相對表現檢測</span>
+        <button class="btn btn-outline-secondary btn-sm goHome" @click="turnToIndexPage">回首頁</button>
+      </div>  
+    
+      <div class="inputValDiv">
+        <div class="content">
+          <label for="Score">學期平均分數: </label><input v-model.number.lazy="estimatedRelPerObj.score" type="number" name="Score" id="Score" class="inputVal" data-score="0" step="any" min="0" max="100">
+
+          <label for="BetweenPersons">區間人數: </label><input v-model.number="estimatedRelPerObj.betweenPersons" type="number" name="BetweenPersons" id="BetweenPersons" class="inputVal" step="any" min="0" max="1000">
+
+          <label for="LowerThanPersons">輸過人數: </label><input v-model.number="estimatedRelPerObj.lowerThanPersons" type="number" name="LowerThanPersons" id="LowerThanPersons" class="inputVal" step="any" min="0" max="1000">
+
+          <label for="AllPersons">母體人數: </label><input v-model.number="estimatedRelPerObj.allPersons" type="number" name="AllPersons" id="AllPersons" class="inputVal" step="any" min="0" max="1000">  
+        </div>
+        <div id="MaxMin" class="content">
+          <span>最小值min: </span><input type="number" readonly :value='estimatedRelPerObj.min'>
+          <span>最大值max: </span><input type="number" readonly :value='estimatedRelPerObj.score === "" ? "" : estimatedRelPerObj.max'>
+          <button class="button calculateScoreBtn" @click="calculateEstimatedRelPer">計算</button>
+        </div>    
+      </div>
+    
+      <hr>
+      <h3>相對表現公式</h3>
+      <div class="formula">
+        <img src="https://epscore-count-tool.web.app/img/PR%E8%A8%88%E7%AE%97.jpg" alt="">
+      </div>
+    
+      <div id='ResultArea' class="area" v-if="estimatedRelPerObj.showCalResultArea">
+        <hr> 
+        <h3>推估相對表現計算結果:</h3>
+        <table id="showResult" class="RelativePerformanceTable" border='2'>
+          <thead>
+            <th> 相對表現範圍 </th>
+            <th> 推估相對表現(%) </th>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="RelativePerformanceRange">{{estimatedRelPerObj.maxRelativePerformanceVal}} ~ {{estimatedRelPerObj.minRelativePerformanceVal}}</td>
+              <td class="RelativePerformanceVal">{{estimatedRelPerObj.relativePerformanceVal}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
 </html>
 
 
