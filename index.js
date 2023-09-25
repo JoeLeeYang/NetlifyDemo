@@ -62,13 +62,8 @@
     },
     created(){
       emitter.on('sendDifferenceData',(data)=>{
-
-        console.log('000',this.differenceObj);
-        
-        console.log(data);
-        this.differenceObj = {...data};
-        console.log('111',this.differenceObj);
-	  });	  
+        this.differenceObj.scoreArr = data;
+	  	});	  
     },
     methods: {
       changePage(page){ //index 切換頁面
@@ -78,7 +73,7 @@
       turnToIndexPage(){ //返回首頁
         this[this.showPage] = false;
         this.isIndexPage = true;
-		this.showPage = '';
+				this.showPage = '';
 		// window.location.reload();
       },
       showArea(){ //差分頁面 show Area
@@ -158,8 +153,8 @@
           this.differenceObj.scoreWeightArr = tempArr;
 
           this.differenceObj.showChangeToScoreUnit1 = true; 
-        }
-        this.differenceObj.showCalResult = true
+				}
+				if(!this.differenceObj.showCalResult) this.differenceObj.showCalResult = true
       },
       calculateAdjustedScore(){ //調整分數計算 
         let scoreArr = this.adjustedScoreObj.scoreArr;
@@ -230,7 +225,7 @@
           }
         },
         deep:true,
-      }
+      },
     },
     computed:{
       heightDifferenceVal(){ //高低差 val
@@ -242,7 +237,7 @@
 
         return this.differenceObj.heightDifferenceVal;
       },
-      heightDifferenceShowOnTable(){ //差分結果(高低差)
+			heightDifferenceShowOnTable() { //差分結果(高低差)
 
           let difference = this.differenceObj;
 
@@ -257,11 +252,12 @@
       standardDeviationVal(){ //標準差 val
 
         let scoreArr = this.differenceObj.scoreArr;
-
-        let standardDeviationVal = 0;
+				let standardDeviationVal = 0;
+				
         this.differenceObj.scoreArr.forEach(item => {
           standardDeviationVal += Math.pow((Math.abs(parseFloat(item)- this.differenceObj.avgVal)),2);
-        })
+				})
+				
         this.differenceObj.standardDeviationVal =  parseFloat(Math.sqrt(standardDeviationVal/scoreArr.length).toFixed(10)); 
 
         return this.differenceObj.standardDeviationVal;       
@@ -379,28 +375,27 @@
           this.differenceObj.showScoreArea = false;
         }  
 
-		  if (this.page === 'isCalculateTotalPage' && mode === 1) {
-			  this.totalTestObj.showWeightArea = true;
-			  this.totalTestObj.showScoreArea = true;
-		  }
-		  else if (this.page === 'isCalculateTotalPage' && mode === 2)
-			  this.totalTestObj.showScoreArea = true;
-        
-		  else if (this.page === 'isDifferencePage' && this.differenceObj.differenceMode === 1 && mode === 1)
-			  this.differenceObj.showScoreArea = true;
+				if (this.page === 'isCalculateTotalPage' && mode === 1) {
+					this.totalTestObj.showWeightArea = true;
+					this.totalTestObj.showScoreArea = true;
+				}
+				else if (this.page === 'isCalculateTotalPage' && mode === 2)
+					this.totalTestObj.showScoreArea = true;
+					
+				else if (this.page === 'isDifferencePage' && this.differenceObj.differenceMode === 1 && mode === 1)
+					this.differenceObj.showScoreArea = true;
 
-		  else if (this.page === 'isDifferencePage' && this.differenceObj.differenceMode === 1 && mode === 2) {
-			  this.differenceObj.showWeightArea = true;
-			  this.differenceObj.showScoreArea = true;
-		  }  
-	  })
-	  emitter.on('differenceMode', (differenceMode) => { 		  
-		if (this.page === 'isDifferencePage' && (differenceMode === 3 || differenceMode === 2)) {
-		  this.differenceObj.showScoreArea = true;
-			this.differenceObj.showWeightArea = false;
-			console.log('test2');
-		}
-	  })
+				else if (this.page === 'isDifferencePage' && this.differenceObj.differenceMode === 1 && mode === 2) {
+					this.differenceObj.showWeightArea = true;
+					this.differenceObj.showScoreArea = true;
+				}  
+			})
+			emitter.on('differenceMode', (differenceMode) => { 		  
+				if (this.page === 'isDifferencePage' && (differenceMode === 3 || differenceMode === 2)) {
+					this.differenceObj.showScoreArea = true;
+					this.differenceObj.showWeightArea = false;
+				}
+			})
     },
     methods:{
       showTotalArea(){
@@ -416,9 +411,9 @@
           });
 
         else if(this.showPage === 'isAdjustedScorePage')
-        this.adjustedScoreObj.scoreArr = this.adjustedScoreObj.scoreStr.split(' ').filter(item=>{
-          return item !== '';
-        })
+			this.adjustedScoreObj.scoreArr = this.adjustedScoreObj.scoreStr.split(' ').filter(item=>{
+			return item !== '';
+			})
         
         else if(this.page === 'isDifferencePage' && !isWeight)
           this.totalTestObj.scoreArr = this.totalTestObj.scoreStr.split(' ').filter(item=>{
@@ -431,14 +426,13 @@
           })
       },
       calculateDifference(){ //差分計算
-		let scoreArr = this.differenceObj.scoreArr;
 
         //各面向差分 && 配分制 && 比重不為空值
         if(this.differenceObj.scoreUnit === 2 && this.differenceObj.differenceMode !== 2 && this.differenceObj.weightStr !== ''){
           let weight = this.differenceObj.weightStr;
           let tempArr = [];
 
-          scoreArr.forEach((item,key) => {
+          this.differenceObj.scoreArr.forEach((item,key) => {
             tempArr.push({
               score: parseFloat((parseFloat(item)/weight*100).toFixed(10)),
               originScore: parseInt(item)
@@ -449,9 +443,9 @@
           this.differenceObj.showChangeToScoreUnit1 = true; 
         }
 
-        this.differenceObj.showCalResult = true;
+		  	if(!this.differenceObj.showCalResult) this.differenceObj.showCalResult = true;
 
-        emitter.emit('sendDifferenceData',this.differenceObj)
+        emitter.emit('sendDifferenceData',this.differenceObj.scoreArr)
       },
     },
     template:
